@@ -1,0 +1,38 @@
+<div id="login">
+    <div class="wrapper">
+        <div class="form padded">
+            <p><strong>Sign In to your account</strong></p>
+            <br>
+            <md-radio-group ng-model="authAs">
+                <md-radio-button class="md-primary"
+                                 ng-value="consts.admins.value"
+                                 aria-label="{{consts.admins.infoText}}">
+                    {{consts.admins.infoText}}
+                </md-radio-button>
+                <md-radio-button class="md-primary"
+                                 ng-value="consts.users.value"
+                                 aria-label="{{consts.users.infoText}}">
+                    {{consts.users.infoText}}
+                </md-radio-button>
+            </md-radio-group>
+            <br>
+            <form name="loginform" ng-submit="login($event)">
+                <md-input-container class="md-block md-primary">
+                    <label>Email</label>
+                    <input type="email" name="user" ng-model="email" required="required" autofocus>
+                </md-input-container>
+                <md-input-container class="md-block md-primary">
+                    <label>Password</label>
+                    <input class="padding-button" name="pass" type="password" ng-model="password" required="required">
+                </md-input-container>
+                <button class="md-button md-small md-ink-ripple md-raised md-primary"
+                        type="submit">
+                    Sign In
+                </button>
+                <br>
+                <br>
+                If you are not registered, you can <a ui-sref="register">Sign Up </a>as a user
+            </form>
+        </div>
+    </div>
+</div>

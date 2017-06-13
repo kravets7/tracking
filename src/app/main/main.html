@@ -1,0 +1,22 @@
+<md-toolbar class="md-theme-indigo top-nav-shadow">
+    <div class="md-toolbar-tools">
+        <md-button class="md-icon-button" aria-label="Settings" hide-gt-md ng-click="toggleLeft()">
+            <i class="fa fa-bars" aria-hidden="true"></i>
+        </md-button>
+        <div style="margin-left: auto">
+            <md-button ng-click="logout()">logout</md-button>
+        </div>
+    </div>
+</md-toolbar>
+<div layout="column" style="height:100%;" ng-cloak>
+    <section layout="row" flex>
+        <md-sidenav
+                class="md-sidenav-left"
+                md-component-id="left"
+                md-is-locked-open="$mdMedia('gt-md')"
+                md-disable-backdrop
+                md-whiteframe="4" ng-include src="'app/components/nav/nav.html'">
+        </md-sidenav>
+        <div ui-view="content"></div>
+    </section>
+</div>
