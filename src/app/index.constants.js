@@ -5,6 +5,8 @@
     .module('sphereLab')
     .constant('malarkey', malarkey)
     .constant('moment', moment)
-    .constant('FirebaseRef', firebase.database().ref());
+    .constant('FirebaseRef', firebase.database().ref())
+    .constant('FirebaseAuth', firebase.auth())
+    .constant('StorageRef', firebase.storage().ref());
 
 })();

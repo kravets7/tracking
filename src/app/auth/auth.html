@@ -1,6 +1,9 @@
 <div id="login">
     <div class="wrapper">
         <div class="form padded">
+            <div style="text-align: center">
+                <img src="assets/icons/logo.png" width="150">
+            </div>
             <p><strong>Sign In to your account</strong></p>
             <br>
             <md-radio-group ng-model="authAs">
@@ -30,8 +33,15 @@
                     Sign In
                 </button>
                 <br>
+                <hr class="hr-text" data-content="OR">
+                <div>
+                    <img src="assets/icons/facebook.svg" style="padding-left: 15px" ng-click="socialLogin('f')">
+                    <img src="assets/icons/google.svg" style="padding-left: 10px" ng-click="socialLogin('g')">
+                </div>
                 <br>
-                If you are not registered, you can <a ui-sref="register">Sign Up </a>as a user
+                <span>
+                    Do not have account? <a ui-sref="register" style="color: orange">Sign Up </a>as a user
+                </span>
             </form>
         </div>
     </div>

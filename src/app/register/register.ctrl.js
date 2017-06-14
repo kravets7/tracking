@@ -6,13 +6,11 @@
         .controller('RegisterController', RegisterController);
 
     /** @ngInject */
-    function RegisterController($scope, toastr, $state, $firebaseAuth, FirebaseRef, LocalStorage) {
+    function RegisterController($scope, toastr, $state, $firebaseAuth, FirebaseRef, StorageRef, FirebaseAuth, LocalStorage) {
         var Auth = $firebaseAuth();
-        var storageRef = firebase.storage().ref();
         $scope.registerData = {
             role: 'user'
         };
-        $scope.authData = {};
         $scope.upload = false;
 
         document.getElementById('file').addEventListener('change', function (event) {
@@ -20,12 +18,47 @@
             var file = event.target.files[0];
             if (file) {
                 $scope.upload = true;
-                storageRef.child('/photos/' + file.name).put(file).then(function (snapshot) {
+                StorageRef.child(file.name).put(file).then(function (snapshot) {
                     console.log('respa');
                     $scope.registerData.photoUrl = snapshot.downloadURL;
                     $scope.upload = false;
                 });
             }
         });
+
+        $scope.register = function (event) {
+            event.preventDefault();
+            if ($scope.registerData.password !== $scope.registerData.confirmPassword) {
+                toastr.error('Password and confirm password are different', 'Error');
+                return;
+            }
+
+            console.log($scope.registerData);
+
+            FirebaseAuth.createUserWithEmailAndPassword($scope.registerData.email, $scope.registerData.password)
+                .then(function(userData) {
+                    console.log(userData);
+                    userData.sendEmailVerification().then(function() {
+                        toastr.info('Verification email sent.', 'Info');
+                        console.log('Verification email sent.');
+                    }, function(error) {
+                        console.log(error);
+                    });
+                    /*FirebaseRef.child('users')
+                        .child(userData.uid)
+                        .set({
+                            email: $scope.registerData.email,
+                            firstName: $scope.registerData.firstName,
+                            surname: $scope.registerData.surname,
+                            middleName: $scope.registerData.middleName,
+                            role: $scope.registerData.role,
+                            phoneNumber: $scope.registerData.phoneNumber,
+                            photoUrl: $scope.registerData.photoUrl
+                        })*/
+                }).catch(function(error) {
+                    console.error("Error: ", error);
+                });
+
+        }
     }
 })();
