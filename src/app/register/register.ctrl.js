@@ -43,6 +43,7 @@
                         console.log('Verification email sent.');
                     }, function(error) {
                         console.log(error);
+                        toastr.error(error.message, 'Error');
                     });
                     /*FirebaseRef.child('users')
                         .child(userData.uid)
@@ -58,7 +59,10 @@
                 }).catch(function(error) {
                     console.error("Error: ", error);
                 });
+        };
 
-        }
+        $scope.goTo = function (route) {
+            $state.go(route);
+        };
     }
 })();
