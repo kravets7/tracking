@@ -35,12 +35,22 @@
                     }
                 }
             })
-            .state('app.user.home', {
-                url: '/user-home',
+            .state('app.user-deliveries', {
+                url: '/user-deliveries',
                 views: {
                     'content@app': {
-                        templateUrl: 'app/user-home/user-user-home.html',
-                        controller: 'UserHomeController'
+                        templateUrl: 'app/user-deliveries/user-deliveries.html',
+                        controller: 'UserDeliveriesController'
+                    }
+                },
+                auth: true
+            })
+            .state('app.user-tracking', {
+                url: '/user-tracking',
+                views: {
+                    'content@app': {
+                        templateUrl: 'app/user-tracking/user-tracking.html',
+                        controller: 'UserTrackingController'
                     }
                 },
                 auth: true

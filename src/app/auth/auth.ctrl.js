@@ -6,7 +6,7 @@
         .controller('AuthController', AuthController);
 
     /** @ngInject */
-    function AuthController($scope, toastr, $state, $firebaseAuth, FirebaseRef, FirebaseAuth, LocalStorage) {
+    function AuthController($scope, toastr, $state, $firebaseAuth, FirebaseRef, FirebaseAuth, LocalStorage, $mdToast) {
         var Auth = $firebaseAuth();
         $scope.providers = {
             g: new firebase.auth.GoogleAuthProvider(),
@@ -30,6 +30,7 @@
             FirebaseAuth.signInWithPopup(provider)
                 .then(function (result) {
                     console.log(result);
+                    $state.go('app.user.home');
                 })
                 .catch(function (err) {
                     toastr.error(err.message, "Error");
@@ -42,16 +43,32 @@
                 .then(function(authData) {
                     console.log("Logged in as:", authData.uid);
                     if (!authData.emailVerified) {
-                        toastr.error("Your account is not verified! Please check your email", "Error");
+                        var pinTo = $scope.getToastPosition();
+                        var toast = $mdToast.simple()
+                            .textContent('Your account is not confirmed. Send verification email?')
+                            .action('Send')
+                            .position(pinTo);
+
+                        $mdToast.show(toast).then(function(response) {
+                            if ( response == 'ok' ) {
+                                authData.sendEmailVerification().then(function() {
+                                    toastr.info('Verification email sent.', 'Info');
+                                    console.log('Verification email sent.');
+                                }, function(error) {
+                                    console.log(error);
+                                    toastr.error(error.message, 'Error');
+                                });
+                            }
+                        });
                         return;
                     }
-                    console.log($scope.consts[$scope.authAs].value);
                     FirebaseRef.child($scope.consts[$scope.authAs].value)
                         .child(authData.uid)
                         .once("value", function (userSnap) {
                             if (userSnap.exists()) {
+                                console.log('tut');
                                 LocalStorage.setItem('role', $scope.authAs);
-                                $state.go('app.user-home');
+                                $state.go('app.user-deliveries');
                             } else {
                                 toastr.error(isNot + $scope.consts[$scope.authAs].infoText, 'Error');
                             }
@@ -66,6 +83,61 @@
             LocalStorage.removeItem('role');
             Auth.$unauth();
             $state.go('auth');
+        };
+
+        var last = {
+            bottom: false,
+            top: true,
+            left: false,
+            right: true
+        };
+
+        $scope.toastPosition = angular.extend({},last);
+
+        $scope.getToastPosition = function() {
+            sanitizePosition();
+
+            return Object.keys($scope.toastPosition)
+                .filter(function(pos) { return $scope.toastPosition[pos]; })
+                .join(' ');
+        };
+
+        function sanitizePosition() {
+            var current = $scope.toastPosition;
+
+            if ( current.bottom && last.top ) current.top = false;
+            if ( current.top && last.bottom ) current.bottom = false;
+            if ( current.right && last.left ) current.left = false;
+            if ( current.left && last.right ) current.right = false;
+
+            last = angular.extend({},current);
+        }
+
+        $scope.showSimpleToast = function() {
+            var pinTo = $scope.getToastPosition();
+
+            $mdToast.show(
+                $mdToast.simple()
+                    .textContent('Simple Toast!')
+                    .position(pinTo )
+                    .hideDelay(3000)
+            );
+        };
+
+        $scope.showActionToast = function() {
+            var pinTo = $scope.getToastPosition();
+            var toast = $mdToast.simple()
+                .textContent('Your account is not confirmed. Send verification email?')
+                .action('Send')
+                .highlightAction(true)
+                .highlightClass('md-accent')// Accent is used by default, this just demonstrates the usage.
+                .position(pinTo);
+
+            $mdToast.show(toast).then(function(response) {
+                if ( response == 'ok' ) {
+                    alert('You clicked the \'UNDO\' action.');
+                }
+            });
         };
     }
 })();
