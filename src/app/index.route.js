@@ -36,7 +36,7 @@
                 }
             })
             .state('app.user-deliveries', {
-                url: '/user-deliveries',
+                url: '/user/deliveries',
                 views: {
                     'content@app': {
                         templateUrl: 'app/user-deliveries/user-deliveries.html',
@@ -46,7 +46,10 @@
                 auth: true
             })
             .state('app.user-tracking', {
-                url: '/user-tracking',
+                url: '/user/tracking',
+                params: {
+                    obj: null
+                },
                 views: {
                     'content@app': {
                         templateUrl: 'app/user-tracking/user-tracking.html',

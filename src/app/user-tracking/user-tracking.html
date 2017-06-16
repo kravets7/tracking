@@ -1,10 +1,10 @@
-<div style="text-align: center">
+<form style="text-align: center" ng-submit="find($event)">
     <md-input-container>
         <label>Please, enter delivery number</label>
-        <input type="text" ng-model="color" style="width: 250px">
+        <input type="text" ng-model="number" style="width: 250px" required autofocus>
     </md-input-container>
 
-    <md-button class="md-primary">Find</md-button>
-</div>
+    <md-button type="submit" class="md-primary">Find</md-button>
+</form>
 
 <div id="map" flex></div>

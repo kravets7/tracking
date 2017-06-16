@@ -6,7 +6,7 @@
         .controller('MainController', MainController);
 
     /** @ngInject */
-    function MainController($scope, $rootScope, LocalStorage, $state, FirebaseAuth, FirebaseRef) {
+    function MainController($scope, $rootScope, LocalStorage, $state, FirebaseAuth, FirebaseRef, $timeout, $mdSidenav, $log) {
         $scope.logout = function () {
             LocalStorage.removeItem('role');
             FirebaseAuth.signOut()
@@ -18,12 +18,17 @@
                 });
         };
 
+        $scope.photo = 'assets/icons/user.png';
+
         FirebaseAuth.onAuthStateChanged(function(user) {
             var role = LocalStorage.getItem('role');
+            $rootScope.id = user.uid;
             FirebaseRef.child(role)
                 .child(user.uid)
                 .once('value', function (userSnap) {
                     $rootScope.User = userSnap.val();
+                    $rootScope.id = user.uid;
+                    $scope.photo = userSnap.val().photoUrl;
                 })
         });
 

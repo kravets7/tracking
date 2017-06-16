@@ -6,10 +6,23 @@
         .controller('UserDeliveriesController', UserDeliveriesController);
 
     /** @ngInject */
-    function UserDeliveriesController($scope, $timeout, toastr, moment) {
-        $timeout(function () {
-            $scope.posts = [];
+    function UserDeliveriesController($scope, toastr, moment, FirebaseRef, $firebaseArray, FirebaseAuth, $state) {
+        FirebaseAuth.onAuthStateChanged(function(user) {
+            var DeliveriesRef = FirebaseRef.child('deliveries');
+            $scope.recipientList = $firebaseArray(DeliveriesRef.orderByChild('recipientId').equalTo('gySCzfteEMOt3lc9oex7PHH4rPw2'));
+            $scope.senderList = $firebaseArray(DeliveriesRef.orderByChild('senderId').equalTo(user.uid));
+            if ($scope.recipientList.length || $scope.senderList.length) $scope.checkListLength = true;
         });
+
+        $scope.showRoute = function(number) {
+            $state.go('app.user-tracking', {
+                obj: {
+                    number: number
+                }
+            });
+        };
+
+        $scope.checkListLength = false;
 
         $scope.getTime = function (time) {
             return moment(new Date(+time)).format('LLLL');
