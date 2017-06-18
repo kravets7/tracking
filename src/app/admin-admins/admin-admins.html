@@ -1,0 +1,106 @@
+<div style="padding: 15px 20px">
+    <md-tabs md-dynamic-height>
+        <md-tab label="All admins">
+            <br>
+            <table md-table multiple>
+                <thead md-head md-order="query.order">
+                <tr md-row>
+                    <th md-column md-order-by="title">First name</th>
+                    <th md-column md-order-by="title">Surname</th>
+                    <th md-column md-order-by="title">Middle name</th>
+                    <th md-column md-order-by="title">Email</th>
+                    <th md-column md-order-by="title">Phone Number</th>
+                </tr>
+                </thead>
+                <tbody md-body>
+                <tr md-row ng-repeat="item in admins">
+                    <td md-cell>
+                        {{item.firstName}}
+                    </td>
+                    <td md-cell>
+                        {{item.surname}}
+                    </td>
+                    <td md-cell>
+                        {{item.middleName}}
+                    </td>
+                    <td md-cell>
+                        {{item.email}}
+                    </td>
+                    <td md-cell>
+                        {{item.phoneNumber}}
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </md-tab>
+        <md-tab label="Add admin">
+            <div class="wrapper">
+                <div class="form padded">
+                    <br>
+                    <form name="fform" ng-submit="register($event)">
+
+                        <div style="text-align: center">
+                            <img src="{{photo}}" style="width: 80px; height: 80px; border-radius: 50%">
+                        </div>
+
+                        <md-input-container class="md-block md-primary">
+                            <label>First Name</label>
+                            <input name="firstName" type="text" ng-model="registerData.firstName" required="required" autofocus>
+                        </md-input-container>
+
+                        <md-input-container class="md-block md-primary">
+                            <label>Surname</label>
+                            <input name="surName" type="text" ng-model="registerData.surname" required="required">
+                        </md-input-container>
+
+                        <md-input-container class="md-block md-primary">
+                            <label>Middle name</label>
+                            <input class="padding-button" name="middleName" type="text" ng-model="registerData.middleName" required="required">
+                        </md-input-container>
+
+                        <md-input-container class="md-block md-primary">
+                            <label>Email</label>
+                            <input class="padding-button" name="email" type="email" ng-model="registerData.email" required="required">
+                        </md-input-container>
+
+
+                        <md-input-container class="md-block md-primary">
+                            <label>Phone Number</label>
+                            <input class="padding-button" name="phoneNumber" type="text" ng-model="registerData.phoneNumber" required="required">
+                        </md-input-container>
+
+                        <md-input-container class="md-block md-primary">
+                            <label>Password</label>
+                            <input class="padding-button" name="pass" type="password" ng-model="registerData.password" required="required">
+                        </md-input-container>
+
+                        <md-input-container class="md-block md-primary">
+                            <label>Confirm Password</label>
+                            <input class="padding-button" name="pass" type="password" ng-model="registerData.confirmPassword" required="required">
+                        </md-input-container>
+
+                        <br>
+
+                        <md-input-container class="md-block md-primary">
+                            <label>Photo Url</label>
+                            <input class="padding-button" name="photoUrl" type="text" ng-model="registerData.photoUrl" required="required">
+                        </md-input-container>
+
+                        <hr class="hr-text" data-content="OR">
+
+                        <md-input-container>
+                            <input class="md-button md-raised md-primary" type="file" name="file" id="fileD" onchange="angular.element(this).scope().change()" accept="image/*" ng-model="postFile" aria-label="file">
+                        </md-input-container>
+                        <md-progress-circular ng-show="upload" class="md-primary" md-diameter="40"></md-progress-circular>
+                        <br>
+                        <button class="md-button md-small md-ink-ripple md-raised md-primary"
+                                type="submit">
+                            Create Admin
+                        </button>
+                        <br>
+                    </form>
+                </div>
+            </div>
+        </md-tab>
+    </md-tabs>
+</div>

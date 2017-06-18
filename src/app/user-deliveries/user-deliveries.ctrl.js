@@ -9,13 +9,13 @@
     function UserDeliveriesController($scope, toastr, moment, FirebaseRef, $firebaseArray, FirebaseAuth, $state) {
         FirebaseAuth.onAuthStateChanged(function(user) {
             var DeliveriesRef = FirebaseRef.child('deliveries');
-            $scope.recipientList = $firebaseArray(DeliveriesRef.orderByChild('recipientId').equalTo('gySCzfteEMOt3lc9oex7PHH4rPw2'));
+            $scope.recipientList = $firebaseArray(DeliveriesRef.orderByChild('recipientId').equalTo(user.uid));
             $scope.senderList = $firebaseArray(DeliveriesRef.orderByChild('senderId').equalTo(user.uid));
             if ($scope.recipientList.length || $scope.senderList.length) $scope.checkListLength = true;
         });
 
         $scope.showRoute = function(number) {
-            $state.go('app.user-tracking', {
+            $state.go('app.admin-user-deliveries', {
                 obj: {
                     number: number
                 }

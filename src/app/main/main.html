@@ -15,7 +15,7 @@
                 <div class="profile-menu-list">
                     <md-content>
                         <md-list layout="column" layout-align="space-between center">
-                            <md-list-item>
+                            <md-list-item ng-click="goTo('app.profile')">
                                 <md-icon md-svg-icon="assets/icons/settings.svg"></md-icon>
                                 <span style="margin-left: 10px">Profile</span>
                             </md-list-item>
@@ -33,12 +33,26 @@
 <div layout="column" style="height:100vh;" ng-cloak>
     <section layout="row" flex>
         <md-sidenav
+                ng-show="role === 'users'"
                 style="background-color: black; color: white"
                 class="md-sidenav-left"
                 md-component-id="left"
                 md-is-locked-open="$mdMedia('gt-md')"
                 md-disable-backdrop
-                md-whiteframe="4" ng-include src="'app/components/nav/nav.html'">
+                md-whiteframe="4"
+                ng-include
+                src="'app/components/nav/nav.html'">
+        </md-sidenav>
+        <md-sidenav
+                ng-show="role === 'admins'"
+                style="background-color: black; color: white"
+                class="md-sidenav-left"
+                md-component-id="left"
+                md-is-locked-open="$mdMedia('gt-md')"
+                md-disable-backdrop
+                md-whiteframe="4"
+                ng-include
+                src="'app/components/nav/admin-nav.html'">
         </md-sidenav>
         <div ui-view="content" style="background-color: gainsboro" flex></div>
     </section>

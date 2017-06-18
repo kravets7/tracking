@@ -18,18 +18,26 @@
                 });
         };
 
+        $scope.goTo = function (route) {
+            $state.go(route);
+        };
+
         $scope.photo = 'assets/icons/user.png';
 
         FirebaseAuth.onAuthStateChanged(function(user) {
-            var role = LocalStorage.getItem('role');
-            $rootScope.id = user.uid;
-            FirebaseRef.child(role)
-                .child(user.uid)
-                .once('value', function (userSnap) {
-                    $rootScope.User = userSnap.val();
-                    $rootScope.id = user.uid;
-                    $scope.photo = userSnap.val().photoUrl;
-                })
+            console.log(LocalStorage.getItem('role'));
+            if (!$scope.id) {
+                $scope.role = LocalStorage.getItem('role');
+                $rootScope.id = user.uid;
+                $scope.id = user.uid;
+                FirebaseRef.child($scope.role)
+                    .child(user.uid)
+                    .once('value', function (userSnap) {
+                        $rootScope.User = userSnap.val();
+                        $rootScope.id = user.uid;
+                        $scope.photo = userSnap.val().photoUrl;
+                    });
+            }
         });
 
         function debounce(func, wait, context) {

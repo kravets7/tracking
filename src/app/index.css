@@ -280,6 +280,28 @@ span {
   box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.2), 0 1px 1px 0 rgba(0, 0, 0, 0.14), 0 2px 1px -1px rgba(0, 0, 0, 0.12);
 }
 
+.login {
+  display: table;
+  position: absolute;
+  height: 100%;
+  width: 100%;
+}
+
+.login .wrapper {
+  display: table-cell;
+  vertical-align: middle;
+}
+
+.login .wrapper .form {
+  margin-left: auto;
+  margin-right: auto;
+  width: 300px;
+  padding: 43px;
+  background: #f7f7f7;
+  -moz-box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.2), 0 1px 1px 0 rgba(0, 0, 0, 0.14), 0 2px 1px -1px rgba(0, 0, 0, 0.12);
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.2), 0 1px 1px 0 rgba(0, 0, 0, 0.14), 0 2px 1px -1px rgba(0, 0, 0, 0.12);
+}
+
 .menuboxShadow {
   -moz-box-shadow: 0 -1px 0 rgba(0, 0, 0, 0.12) inset !important;
   box-shadow: 0 -1px 0 rgba(0, 0, 0, 0.12) inset !important;

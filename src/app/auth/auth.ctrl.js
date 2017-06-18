@@ -30,7 +30,22 @@
             FirebaseAuth.signInWithPopup(provider)
                 .then(function (result) {
                     console.log(result);
-                    $state.go('app.user.home');
+                    FirebaseRef.child('users')
+                        .child(result.user.uid)
+                        .once('value', function (userSnap) {
+                            if (userSnap.exists()) {
+                                $state.go('app.user-deliveries');
+                                LocalStorage.setItem('role', 'users');
+                            } else {
+                                $state.go('nextRegisterStep', {data: {
+                                    uid: result.user.uid,
+                                    email: result.user.providerData[0].email,
+                                    firstName: result.user.providerData[0].displayName.split(' ')[0],
+                                    surname: result.user.providerData[0].displayName.split(' ')[1],
+                                    photoUrl: result.user.providerData[0].photoURL
+                                }});
+                            }
+                        });
                 })
                 .catch(function (err) {
                     toastr.error(err.message, "Error");
@@ -68,7 +83,8 @@
                             if (userSnap.exists()) {
                                 console.log('tut');
                                 LocalStorage.setItem('role', $scope.authAs);
-                                $state.go('app.user-deliveries');
+                                if ($scope.authAs === 'users') $state.go('app.user-deliveries');
+                                else $state.go('app.admin-deliveries');
                             } else {
                                 toastr.error(isNot + $scope.consts[$scope.authAs].infoText, 'Error');
                             }

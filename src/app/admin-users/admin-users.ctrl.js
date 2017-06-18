@@ -3,28 +3,42 @@
 
     angular
         .module('sphereLab')
-        .controller('RegisterController', RegisterController);
+        .controller('AdminUsersController', AdminUsersController);
 
     /** @ngInject */
-    function RegisterController($scope, toastr, $state, $firebaseAuth, FirebaseRef, StorageRef, FirebaseAuth, LocalStorage) {
-        var Auth = $firebaseAuth();
+    function AdminUsersController($scope, toastr, FirebaseRef, $firebaseArray, FirebaseAuth, StorageRef, $state) {
+        $scope.photo = 'assets/icons/user.png';
+        FirebaseAuth.onAuthStateChanged(function(user) {
+            var UsersRef = FirebaseRef.child('users');
+            $scope.users = $firebaseArray(UsersRef);
+        });
+
         $scope.registerData = {
             role: 'user'
         };
         $scope.upload = false;
 
-        document.getElementById('file').addEventListener('change', function (event) {
+        $scope.showPackages = function (id) {
+            $state.go('app.admin-user-deliveries', {
+                data: {
+                    userId: id
+                }
+            });
+        };
+
+        $scope.change = function () {
             console.log('tut');
-            var file = event.target.files[0];
+            var file = document.getElementById('fileD').files[0];
             if (file) {
                 $scope.upload = true;
                 StorageRef.child(file.name).put(file).then(function (snapshot) {
                     console.log('respa');
                     $scope.registerData.photoUrl = snapshot.downloadURL;
+                    $scope.photo = $scope.registerData.photoUrl;
                     $scope.upload = false;
                 });
             }
-        });
+        };
 
         $scope.register = function (event) {
             event.preventDefault();
@@ -57,12 +71,8 @@
                         toastr.error(error.message, 'Error');
                     });
                 }).catch(function(error) {
-                    console.error("Error: ", error);
-                });
-        };
-
-        $scope.goTo = function (route) {
-            $state.go(route);
+                console.error("Error: ", error);
+            });
         };
     }
 })();

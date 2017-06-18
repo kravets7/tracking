@@ -1,0 +1,52 @@
+<div id="login">
+    <div class="wrapper">
+        <div class="form padded">
+            <p><strong>Profile</strong></p>
+            <br>
+            <form name="registerForm" ng-submit="register($event)">
+
+                <div style="text-align: center">
+                    <img src="{{photo}}" style="width: 80px; height: 80px; border-radius: 50%">
+                </div>
+
+                <md-input-container class="md-block md-primary">
+                    <label>First Name</label>
+                    <input name="firstName" type="text" ng-model="data.firstName" required="required" disabled>
+                </md-input-container>
+
+                <md-input-container class="md-block md-primary">
+                    <label>Surname</label>
+                    <input name="surName" type="text" ng-model="data.surname" required="required" disabled>
+                </md-input-container>
+
+                <md-input-container class="md-block md-primary">
+                    <label>Middle name</label>
+                    <input class="padding-button" name="middleName" type="text" ng-model="data.middleName" required="required" disabled>
+                </md-input-container>
+
+                <md-input-container class="md-block md-primary">
+                    <label>Email</label>
+                    <input class="padding-button" name="email" type="email" ng-model="data.email" required="required" disabled>
+                </md-input-container>
+
+                <md-input-container class="md-block md-primary">
+                    <label>Phone Number</label>
+                    <input class="padding-button" name="phoneNumber" type="text" ng-model="data.phoneNumber" required="required" disabled>
+                </md-input-container>
+
+                <md-input-container class="md-block md-primary">
+                    <label>Photo Url</label>
+                    <input class="padding-button" name="photoUrl" type="text" ng-model="data.photoUrl" required="required">
+                </md-input-container>
+
+                <hr class="hr-text" data-content="OR">
+
+                <md-input-container>
+                    <input class="md-button md-raised md-primary" type="file" name="file" id="file" accept="image/*" ng-model="postFile" aria-label="file">
+                </md-input-container>
+                <md-progress-circular ng-show="upload" class="md-primary" md-diameter="40"></md-progress-circular>
+                <br>
+            </form>
+        </div>
+    </div>
+</div>

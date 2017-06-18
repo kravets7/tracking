@@ -3,28 +3,48 @@
 
     angular
         .module('sphereLab')
-        .controller('RegisterController', RegisterController);
+        .controller('AdminDriversController', AdminDriversController);
 
     /** @ngInject */
-    function RegisterController($scope, toastr, $state, $firebaseAuth, FirebaseRef, StorageRef, FirebaseAuth, LocalStorage) {
-        var Auth = $firebaseAuth();
+    function AdminDriversController($scope, toastr, moment, FirebaseRef, $firebaseArray, FirebaseAuth, $state, StorageRef) {
+        $scope.photo = 'assets/icons/driver.png';
+        FirebaseAuth.onAuthStateChanged(function(user) {
+            var DeliveriesRef = FirebaseRef.child('drivers');
+            $scope.drivers = $firebaseArray(DeliveriesRef);
+        });
+
+        $scope.lastTimeLocation = function(id) {
+            $state.go('app.admin-tracking', {
+                obj: {
+                    driver: id
+                }
+            });
+        };
+
+        $scope.getTime = function (time) {
+            return moment(new Date(+time)).format('LLLL');
+        };
+
         $scope.registerData = {
-            role: 'user'
+            role: 'driver'
         };
         $scope.upload = false;
 
-        document.getElementById('file').addEventListener('change', function (event) {
+
+        $scope.change = function () {
             console.log('tut');
-            var file = event.target.files[0];
+            var file = document.getElementById('fileD').files[0];
             if (file) {
                 $scope.upload = true;
                 StorageRef.child(file.name).put(file).then(function (snapshot) {
                     console.log('respa');
                     $scope.registerData.photoUrl = snapshot.downloadURL;
+                    $scope.photo = $scope.registerData.photoUrl;
                     $scope.upload = false;
                 });
             }
-        });
+        };
+
 
         $scope.register = function (event) {
             event.preventDefault();
@@ -41,7 +61,7 @@
                     userData.sendEmailVerification().then(function() {
                         toastr.info('Verification email sent.', 'Info');
                         console.log('Verification email sent.');
-                        FirebaseRef.child('users')
+                        FirebaseRef.child('drivers')
                             .child(userData.uid)
                             .set({
                                 email: $scope.registerData.email,
@@ -57,12 +77,8 @@
                         toastr.error(error.message, 'Error');
                     });
                 }).catch(function(error) {
-                    console.error("Error: ", error);
-                });
-        };
-
-        $scope.goTo = function (route) {
-            $state.go(route);
+                console.error("Error: ", error);
+            });
         };
     }
 })();

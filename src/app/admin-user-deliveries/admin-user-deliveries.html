@@ -1,0 +1,75 @@
+<div style="padding: 15px 20px">
+    <br>
+    <h3>Your deliveries</h3>
+    <br>
+    <table md-table multiple>
+        <thead md-head md-order="query.order">
+        <tr md-row>
+            <th md-column md-order-by="title">Number</th>
+            <th md-column md-order-by="title">From</th>
+            <th md-column md-order-by="title">To</th>
+            <th md-column md-order-by="title">Status</th>
+            <th md-column md-order-by="title">Sender</th>
+            <th md-column md-order-by="title">Recipient</th>
+            <th md-column md-order-by="title">Track</th>
+        </tr>
+        </thead>
+        <tbody md-body>
+        <tr md-row ng-repeat="item in recipientList">
+            <td md-cell>
+                {{item.id}}
+            </td>
+            <td md-cell>
+                {{item.senderLocation}}
+            </td>
+            <td md-cell>
+                {{item.recipientLocation}}
+            </td>
+            <td md-cell>
+                {{item.status}}
+            </td>
+            <td md-cell>
+                {{item.senderName}}<br>
+                {{item.senderEmail}}<br>
+                {{item.senderPhone}}<br>
+            </td>
+            <td md-cell>
+                {{item.recipientName}}<br>
+                {{item.recipientEmail}}<br>
+                {{item.recipientPhone}}<br>
+            </td>
+            <td md-cell flex ng-click="showRoute(item.id)">
+                <img class="png-icon" src="assets/icons/marker.png" style="width: 24px; height: 24px;">
+            </td>
+
+        </tr>
+        <tr md-row ng-repeat="item in senderList">
+            <td md-cell>
+                {{item.id}}
+            </td>
+            <td md-cell>
+                {{item.senderLocation}}
+            </td>
+            <td md-cell>
+                {{item.recipientLocation}}
+            </td>
+            <td md-cell>
+                {{item.status}}
+            </td>
+            <td md-cell>
+                {{item.senderName}}<br>
+                {{item.senderEmail}}<br>
+                {{item.senderPhone}}<br>
+            </td>
+            <td md-cell>
+                {{item.recipientName}}<br>
+                {{item.recipientEmail}}<br>
+                {{item.recipientPhone}}<br>
+            </td>
+            <td md-cell flex ng-click="showRoute(item.id)">
+                <img class="png-icon" src="assets/icons/marker.png" style="width: 24px; height: 24px;">
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
