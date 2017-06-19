@@ -16,10 +16,12 @@
         $scope.registerData = {};
 
         function findUser(email) {
-            return FirebaseRef.child('users')
-                .orderByChild('email')
-                .equalTo(email)
-                .once('value')
+            return $firebaseArray(
+                FirebaseRef.child('users')
+                    .orderByChild('email')
+                    .equalTo(email)
+                    .limitToLast(1)
+            ).$loaded()
         }
 
         $scope.statusValues = ['Sent', 'Delivered', 'Obtained'];
@@ -89,7 +91,7 @@
         };
 
         $scope.addDelivery = function () {
-            $scope.registerData.id = $scope.deliveries.length + 1;
+            $scope.registerData.id = $scope.deliveries.length + 1 + '';
             $scope.registerData.status = 'Sent';
             $scope.registerData.sendDate = moment().format('DD.MM.YYYY');
 
@@ -102,23 +104,25 @@
             }
             findUser($scope.registerData.senderEmail)
                 .then(function (userSnap) {
-                    if (!userSnap.exists()) {
+                    if (!userSnap[0]) {
                         throw "Sender not found by email";
                     } else {
-                        var sender = userSnap.val();
+                        var sender = userSnap[0];
+                        console.log(sender);
                         console.log(sender.firstName + ' ' + sender.middleName + ' ' + sender.surname);
-                        $scope.registerData.senderId = userSnap.key;
+                        $scope.registerData.senderId = sender.$id;
                         $scope.registerData.senderName = sender.firstName + ' ' + sender.middleName + ' ' + sender.surname;
                         return findUser($scope.registerData.recipientEmail)
                     }
                 })
                 .then(function (userSnap) {
-                    if (!userSnap.exists()) {
+                    if (!userSnap[0]) {
                         throw "Recipient not found by email";
                     } else {
-                        var recipient = userSnap.val();
+                        var recipient = userSnap[0];
+                        console.log(recipient);
                         console.log(recipient.firstName + ' ' + recipient.middleName + ' ' + recipient.surname);
-                        $scope.registerData.recipientId = userSnap.key;
+                        $scope.registerData.recipientId = recipient.$id;
                         $scope.registerData.recipientName = recipient.firstName + ' ' + recipient.middleName + ' ' + recipient.surname;
                         console.log($scope.registerData);
                         return DeliveriesRef.child($scope.registerData.id).set($scope.registerData);
