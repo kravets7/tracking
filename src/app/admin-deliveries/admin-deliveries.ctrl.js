@@ -108,8 +108,6 @@
                         throw "Sender not found by email";
                     } else {
                         var sender = userSnap[0];
-                        console.log(sender);
-                        console.log(sender.firstName + ' ' + sender.middleName + ' ' + sender.surname);
                         $scope.registerData.senderId = sender.$id;
                         $scope.registerData.senderName = sender.firstName + ' ' + sender.middleName + ' ' + sender.surname;
                         return findUser($scope.registerData.recipientEmail)
@@ -120,11 +118,8 @@
                         throw "Recipient not found by email";
                     } else {
                         var recipient = userSnap[0];
-                        console.log(recipient);
-                        console.log(recipient.firstName + ' ' + recipient.middleName + ' ' + recipient.surname);
                         $scope.registerData.recipientId = recipient.$id;
                         $scope.registerData.recipientName = recipient.firstName + ' ' + recipient.middleName + ' ' + recipient.surname;
-                        console.log($scope.registerData);
                         return DeliveriesRef.child($scope.registerData.id).set($scope.registerData);
                     }
                 })
