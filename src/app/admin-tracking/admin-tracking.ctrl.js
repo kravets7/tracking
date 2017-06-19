@@ -111,6 +111,7 @@
         }
 
         if ($stateParams.obj && $stateParams.obj.driver) {
+            clearMap();
             var id = $stateParams.obj.driver;
             FirebaseRef.child('drivers')
                 .child(id)
@@ -125,6 +126,7 @@
                         map: map,
                         title: driver.firstName
                     });
+                    markers.push(marker);
                 });
         }
     }
