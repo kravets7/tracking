@@ -15,7 +15,7 @@
         });
 
         $scope.showRoute = function(number) {
-            $state.go('app.admin-user-deliveries', {
+            $state.go('app.user-tracking', {
                 obj: {
                     number: number
                 }

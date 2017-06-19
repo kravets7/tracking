@@ -6,7 +6,7 @@
         .controller('AdminUsersController', AdminUsersController);
 
     /** @ngInject */
-    function AdminUsersController($scope, toastr, FirebaseRef, $firebaseArray, FirebaseAuth, StorageRef, $state) {
+    function AdminUsersController($scope, toastr, FirebaseRef, $firebaseArray, FirebaseAuth, StorageRef, $state, LoginService) {
         $scope.photo = 'assets/icons/user.png';
         FirebaseAuth.onAuthStateChanged(function(user) {
             var UsersRef = FirebaseRef.child('users');
@@ -66,6 +66,7 @@
                                 phoneNumber: $scope.registerData.phoneNumber,
                                 photoUrl: $scope.registerData.photoUrl
                             });
+                        LoginService.login();
                     }, function(error) {
                         console.log(error);
                         toastr.error(error.message, 'Error');

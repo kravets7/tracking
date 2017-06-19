@@ -290,6 +290,7 @@ span {
 .login .wrapper {
   display: table-cell;
   vertical-align: middle;
+  width: 100%;
 }
 
 .login .wrapper .form {

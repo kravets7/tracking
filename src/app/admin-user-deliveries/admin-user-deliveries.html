@@ -26,7 +26,29 @@
                 {{item.recipientLocation}}
             </td>
             <td md-cell>
-                {{item.status}}
+                        <span ng-if="!item.changed"
+                              ng-click="editItem(item)"
+                              style="cursor: pointer">
+                            {{item.status}}
+                            <img src="assets/icons/edit.png"
+                                 style="width: 12px; height: 12px"
+                                 alt="Edit">
+                        </span>
+                <span ng-if="item.changed">
+                            <md-input-container>
+                                <md-select ng-model="item.newStatus" placeholder="Select a state">
+                                    <md-option ng-value="opt" ng-repeat="opt in statusValues">{{ opt }}</md-option>
+                                </md-select>
+                            </md-input-container>
+                            <img src="assets/icons/save.png"
+                                 style="width: 12px; height: 12px"
+                                 ng-click="saveItem(item)"
+                                 alt="Save">
+                            <img src="assets/icons/close.png"
+                                 style="width: 12px; height: 12px"
+                                 ng-click="item.changed = false;"
+                                 alt="Close">
+                        </span>
             </td>
             <td md-cell>
                 {{item.senderName}}<br>
@@ -54,7 +76,29 @@
                 {{item.recipientLocation}}
             </td>
             <td md-cell>
-                {{item.status}}
+                        <span ng-if="!item.changed"
+                              ng-click="editItem(item)"
+                              style="cursor: pointer">
+                            {{item.status}}
+                            <img src="assets/icons/edit.png"
+                                 style="width: 12px; height: 12px"
+                                 alt="Edit">
+                        </span>
+                <span ng-if="item.changed">
+                            <md-input-container>
+                                <md-select ng-model="item.newStatus" placeholder="Select a state">
+                                    <md-option ng-value="opt" ng-repeat="opt in statusValues">{{ opt }}</md-option>
+                                </md-select>
+                            </md-input-container>
+                            <img src="assets/icons/save.png"
+                                 style="width: 12px; height: 12px"
+                                 ng-click="saveItem(item)"
+                                 alt="Save">
+                            <img src="assets/icons/close.png"
+                                 style="width: 12px; height: 12px"
+                                 ng-click="item.changed = false;"
+                                 alt="Close">
+                        </span>
             </td>
             <td md-cell>
                 {{item.senderName}}<br>

@@ -53,6 +53,9 @@
                     'content@app': {
                         templateUrl: 'app/profile/profile.html',
                         controller: 'ProfileController'
+                    },
+                    'nav@app': {
+                        templateUrl: 'app/nav/nav.html'
                     }
                 },
                 auth: true
@@ -63,6 +66,9 @@
                     'content@app': {
                         templateUrl: 'app/user-deliveries/user-deliveries.html',
                         controller: 'UserDeliveriesController'
+                    },
+                    'nav@app': {
+                        templateUrl: 'app/nav/nav.html'
                     }
                 },
                 auth: true
@@ -76,6 +82,9 @@
                     'content@app': {
                         templateUrl: 'app/user-tracking/user-tracking.html',
                         controller: 'UserTrackingController'
+                    },
+                    'nav@app': {
+                        templateUrl: 'app/nav/nav.html'
                     }
                 },
                 auth: true
@@ -86,6 +95,9 @@
                     'content@app': {
                         templateUrl: 'app/admin-deliveries/admin-deliveries.html',
                         controller: 'AdminDeliveriesController'
+                    },
+                    'nav@app': {
+                        templateUrl: 'app/nav/nav-admin.html'
                     }
                 },
                 auth: true
@@ -99,6 +111,9 @@
                     'content@app': {
                         templateUrl: 'app/admin-tracking/admin-tracking.html',
                         controller: 'AdminTrackingController'
+                    },
+                    'nav@app': {
+                        templateUrl: 'app/nav/nav-admin.html'
                     }
                 },
                 auth: true
@@ -109,6 +124,9 @@
                     'content@app': {
                         templateUrl: 'app/admin-drivers/admin-drivers.html',
                         controller: 'AdminDriversController'
+                    },
+                    'nav@app': {
+                        templateUrl: 'app/nav/nav-admin.html'
                     }
                 },
                 auth: true
@@ -119,6 +137,9 @@
                     'content@app': {
                         templateUrl: 'app/admin-users/admin-users.html',
                         controller: 'AdminUsersController'
+                    },
+                    'nav@app': {
+                        templateUrl: 'app/nav/nav-admin.html'
                     }
                 },
                 auth: true
@@ -129,6 +150,9 @@
                     'content@app': {
                         templateUrl: 'app/admin-admins/admin-admins.html',
                         controller: 'AdminAdminsController'
+                    },
+                    'nav@app': {
+                        templateUrl: 'app/nav/nav-admin.html'
                     }
                 },
                 auth: true
@@ -139,6 +163,9 @@
                     'content@app': {
                         templateUrl: 'app/admin-user-deliveries/admin-user-deliveries.html',
                         controller: 'AdminUserDeliveriesController'
+                    },
+                    'nav@app': {
+                        templateUrl: 'app/nav/nav-admin.html'
                     }
                 },
                 params: {

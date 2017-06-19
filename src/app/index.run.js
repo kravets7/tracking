@@ -6,7 +6,18 @@
         .run(runBlock);
 
     /** @ngInject */
-    function runBlock($rootScope, $state, $firebaseAuth) {
-        var Auth = $firebaseAuth();
+    function runBlock($rootScope, LocalStorage) {
+
+        $rootScope.$on('$stateChangeStart', function (event, stateData, toParams, fromState) {
+
+            if (stateData.name === 'app.profile') {
+                var role = LocalStorage.getItem('role');
+                console.log(role);
+                if (role && role === 'admins') {
+                    stateData.views['nav@app'].templateUrl = 'app/nav/nav-admin.html';
+                }
+            }
+        });
+
     }
 })();

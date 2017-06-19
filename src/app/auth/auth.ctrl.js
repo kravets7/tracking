@@ -6,7 +6,7 @@
         .controller('AuthController', AuthController);
 
     /** @ngInject */
-    function AuthController($scope, toastr, $state, $firebaseAuth, FirebaseRef, FirebaseAuth, LocalStorage, $mdToast) {
+    function AuthController($scope, toastr, $state, $firebaseAuth, FirebaseRef, FirebaseAuth, LocalStorage, $mdToast, LoginService) {
         var Auth = $firebaseAuth();
         $scope.providers = {
             g: new firebase.auth.GoogleAuthProvider(),
@@ -57,6 +57,7 @@
             Auth.$signInWithEmailAndPassword($scope.email, $scope.password)
                 .then(function(authData) {
                     console.log("Logged in as:", authData.uid);
+                    LoginService.setItem($scope.email, $scope.password);
                     if (!authData.emailVerified) {
                         var pinTo = $scope.getToastPosition();
                         var toast = $mdToast.simple()

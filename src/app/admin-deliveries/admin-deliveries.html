@@ -26,7 +26,29 @@
                         {{item.recipientLocation}}
                     </td>
                     <td md-cell>
-                        {{item.status}}
+                        <span ng-if="!item.changed"
+                              ng-click="editItem(item)"
+                              style="cursor: pointer">
+                            {{item.status}}
+                            <img src="assets/icons/edit.png"
+                                 style="width: 12px; height: 12px"
+                                 alt="Edit">
+                        </span>
+                        <span ng-if="item.changed">
+                            <md-input-container>
+                                <md-select ng-model="item.newStatus" placeholder="Select a state">
+                                    <md-option ng-value="opt" ng-repeat="opt in statusValues">{{ opt }}</md-option>
+                                </md-select>
+                            </md-input-container>
+                            <img src="assets/icons/save.png"
+                                 style="width: 12px; height: 12px"
+                                 ng-click="saveItem(item)"
+                                 alt="Save">
+                            <img src="assets/icons/close.png"
+                                 style="width: 12px; height: 12px"
+                                 ng-click="item.changed = false;"
+                                 alt="Close">
+                        </span>
                     </td>
                     <td md-cell>
                         {{item.senderName}}<br>
@@ -47,7 +69,102 @@
             </table>
         </md-tab>
         <md-tab label="Add delivery">
+            <div class="wrapper">
+                <div class="form padded">
+                    <br>
+                    <form name="fform" ng-submit="addDelivery($event)">
 
+                        <div style="text-align: center">
+                            <img src="assets/icons/package.png" style="width: 80px; height: 80px; border-radius: 50%">
+                        </div>
+
+                        <br>
+
+                        <div class="row">
+
+                            <div class="col-md-4">
+                                <md-input-container class="md-block md-primary">
+                                    <label>Sender Email</label>
+                                    <input name="senderEmail" type="email" ng-model="registerData.senderEmail" required="required" autofocus>
+                                </md-input-container>
+                            </div>
+
+                            <div class="col-md-4">
+                                <md-input-container class="md-block md-primary">
+                                    <label>Sender Phone</label>
+                                    <input name="senderPhone" type="text" ng-model="registerData.senderPhone" required="required">
+                                </md-input-container>
+                            </div>
+
+                            <div class="col-md-4">
+                                <md-input-container>
+                                    <md-select ng-model="registerData.senderLocation" placeholder="Sender location" required="required">
+                                        <md-option ng-value="opt.$id" ng-repeat="opt in cities">{{ opt.$id }}</md-option>
+                                    </md-select>
+                                </md-input-container>
+                            </div>
+
+                        </div>
+
+                        <div class="row">
+
+                            <div class="col-md-4">
+                                <md-input-container class="md-block md-primary">
+                                    <label>Recipient Email</label>
+                                    <input name="recipientEmail" type="email" ng-model="registerData.recipientEmail" required="required">
+                                </md-input-container>
+                            </div>
+
+                            <div class="col-md-4">
+                                <md-input-container class="md-block md-primary">
+                                    <label>Recipient Phone</label>
+                                    <input name="recipientPhone" type="text" ng-model="registerData.recipientPhone" required="required">
+                                </md-input-container>
+                            </div>
+
+                            <div class="col-md-4">
+                                <md-input-container>
+                                    <md-select ng-model="registerData.recipientLocation" placeholder="Recipient location" required="required">
+                                        <md-option ng-value="opt.$id" ng-repeat="opt in cities">{{ opt.$id }}</md-option>
+                                    </md-select>
+                                </md-input-container>
+                            </div>
+
+                        </div>
+
+                        <div class="row">
+
+                            <div class="col-md-4">
+                                <md-input-container class="md-block md-primary">
+                                    <label>Weight</label>
+                                    <input name="weight" type="number" ng-model="registerData.weight" required="required">
+                                </md-input-container>
+                            </div>
+
+                            <div class="col-md-4">
+                                <md-input-container class="md-block md-primary">
+                                    <label>Price</label>
+                                    <input name="price" type="number" ng-model="registerData.price" required="required">
+                                </md-input-container>
+                            </div>
+
+                            <div class="col-md-4">
+                                <md-input-container>
+                                    <md-select ng-model="registerData.driverId" placeholder="Driver" required="required">
+                                        <md-option ng-value="opt.$id" ng-repeat="opt in drivers">{{ opt.firstName + ' ' + opt.surname}}</md-option>
+                                    </md-select>
+                                </md-input-container>
+                            </div>
+
+                        </div>
+
+                        <button class="md-button md-small md-ink-ripple md-raised md-primary"
+                                type="submit">
+                            Create Delivery
+                        </button>
+                    </form>
+                </div>
+            </div>
         </md-tab>
     </md-tabs>
 </div>

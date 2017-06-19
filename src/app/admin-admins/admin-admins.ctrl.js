@@ -6,7 +6,7 @@
         .controller('AdminAdminsController', AdminAdminsController);
 
     /** @ngInject */
-    function AdminAdminsController($scope, toastr, moment, FirebaseRef, $firebaseArray, FirebaseAuth, $state, StorageRef) {
+    function AdminAdminsController($scope, toastr, moment, FirebaseRef, $firebaseArray, FirebaseAuth, $state, StorageRef, LoginService) {
         $scope.photo = 'assets/icons/administrator.png';
         var AdminsRef = FirebaseRef.child('admins');
         $scope.admins = $firebaseArray(AdminsRef);
@@ -56,6 +56,7 @@
                                 phoneNumber: $scope.registerData.phoneNumber,
                                 photoUrl: $scope.registerData.photoUrl
                             });
+                        LoginService.login();
                     }, function(error) {
                         console.log(error);
                         toastr.error(error.message, 'Error');

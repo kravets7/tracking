@@ -25,19 +25,18 @@
         $scope.photo = 'assets/icons/user.png';
 
         FirebaseAuth.onAuthStateChanged(function(user) {
-            console.log(LocalStorage.getItem('role'));
-            if (!$scope.id) {
-                $scope.role = LocalStorage.getItem('role');
-                $rootScope.id = user.uid;
-                $scope.id = user.uid;
-                FirebaseRef.child($scope.role)
-                    .child(user.uid)
-                    .once('value', function (userSnap) {
-                        $rootScope.User = userSnap.val();
-                        $rootScope.id = user.uid;
-                        $scope.photo = userSnap.val().photoUrl;
-                    });
-            }
+            $scope.role = LocalStorage.getItem('role');
+            console.log(user.uid);
+            $rootScope.id = user.uid;
+            $scope.id = user.uid;
+            FirebaseRef.child($scope.role)
+                .child(user.uid)
+                .once('value', function (userSnap) {
+                    console.log(userSnap.val());
+                    $rootScope.User = userSnap.val();
+                    $rootScope.id = user.uid;
+                    $scope.photo = userSnap.val().photoUrl;
+                });
         });
 
         function debounce(func, wait, context) {

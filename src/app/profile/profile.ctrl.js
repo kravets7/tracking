@@ -6,20 +6,17 @@
         .controller('ProfileController', ProfileController);
 
     /** @ngInject */
-    function ProfileController($scope, LocalStorage, $state, FirebaseAuth, FirebaseRef, StorageRef, toastr) {
+    function ProfileController($scope, LocalStorage, FirebaseAuth, FirebaseRef, StorageRef, toastr, $firebaseObject) {
         $scope.photo = 'assets/icons/user.png';
 
         FirebaseAuth.onAuthStateChanged(function(user) {
             $scope.uid = user.uid;
-            console.log(LocalStorage.getItem('role'));
             $scope.role = LocalStorage.getItem('role');
-            FirebaseRef.child($scope.role)
-                .child(user.uid)
-                .once('value', function (userSnap) {
-                    console.log(userSnap.val());
-                    $scope.photo = userSnap.val().photoUrl;
-                    $scope.data = userSnap.val();
-                })
+            var userRef = FirebaseRef.child($scope.role).child(user.uid);
+            $scope.data = $firebaseObject(userRef);
+            $scope.data.$loaded().then(function (data) {
+                $scope.photo = data.photoUrl;
+            });
         });
 
         $scope.upload = false;

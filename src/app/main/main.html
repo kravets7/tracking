@@ -32,28 +32,7 @@
 </md-toolbar>
 <div layout="column" style="height:100vh;" ng-cloak>
     <section layout="row" flex>
-        <md-sidenav
-                ng-show="role === 'users'"
-                style="background-color: black; color: white"
-                class="md-sidenav-left"
-                md-component-id="left"
-                md-is-locked-open="$mdMedia('gt-md')"
-                md-disable-backdrop
-                md-whiteframe="4"
-                ng-include
-                src="'app/components/nav/nav.html'">
-        </md-sidenav>
-        <md-sidenav
-                ng-show="role === 'admins'"
-                style="background-color: black; color: white"
-                class="md-sidenav-left"
-                md-component-id="left"
-                md-is-locked-open="$mdMedia('gt-md')"
-                md-disable-backdrop
-                md-whiteframe="4"
-                ng-include
-                src="'app/components/nav/admin-nav.html'">
-        </md-sidenav>
+        <ui-view name="nav"></ui-view>
         <div ui-view="content" style="background-color: gainsboro" flex></div>
     </section>
 </div>
