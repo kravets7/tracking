@@ -12,8 +12,18 @@
             center: {lat: 48.6208, lng: 22.287883},
             zoom: 12
         });
+        var markers = [];
+
+        function clearMap() {
+            markers.forEach(function (item) {
+                console.log(item);
+                if (item && item.setMap) item.setMap(null);
+            });
+            markers = [];
+        }
 
         function makeTrack(delivery) {
+            clearMap();
             var driverId = delivery.driverId;
             FirebaseRef.child('drivers')
                 .child(driverId)
@@ -34,6 +44,7 @@
                                         },
                                         icon: 'http://maps.google.com/mapfiles/ms/icons/green-dot.png'
                                     });
+                                    markers.push(cityMarker);
                                     var loc = new google.maps.LatLng(data.latitude, data.longitude);
                                     bounds.extend(loc);
                                     cityMarker.setMap(map);
@@ -60,6 +71,9 @@
                                         position: road[road.length - 1],
                                         icon: 'http://maps.google.com/mapfiles/ms/icons/blue-dot.png'
                                     });
+                                    markers.push(startMarker);
+                                    markers.push(endMarker);
+                                    markers.push(flightPath);
                                     startMarker.setMap(map);
                                     endMarker.setMap(map);
                                     flightPath.setMap(map);

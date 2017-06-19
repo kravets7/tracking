@@ -30,9 +30,9 @@
         </div>
     </div>
 </md-toolbar>
-<div layout="column" style="height:100vh;" ng-cloak>
+<div layout="column" ng-cloak>
     <section layout="row" flex>
         <ui-view name="nav"></ui-view>
-        <div ui-view="content" style="background-color: gainsboro" flex></div>
+        <div ui-view="content" style="background-color: gainsboro; min-height: calc(100vh - 64px);" flex></div>
     </section>
 </div>
